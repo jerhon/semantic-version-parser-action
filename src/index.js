@@ -13,13 +13,14 @@ try {
 
     core.setOutput("success", true)
 
+    const parsed = regex.exec(version)
+
     const major = parsed.groups.MAJOR
     const minor = parsed.groups.MINOR
     const patch = parsed.groups.PATCH
     let prerelease = parsed.groups.PRERELEASE
     let build = parsed.groups.BUILD
 
-    const parsed = regex.exec(version)
     if (major) {
         core.setOutput("major", major)
         core.info("major: " + major)
