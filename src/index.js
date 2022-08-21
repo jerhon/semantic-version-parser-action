@@ -15,40 +15,32 @@ try {
 
     const parsed = regex.exec(version)
 
-    const major = parsed.groups.MAJOR
-    const minor = parsed.groups.MINOR
-    const patch = parsed.groups.PATCH
-    let prerelease = parsed.groups.PRERELEASE
-    let build = parsed.groups.BUILD
+    const major = parsed.groups.MAJOR || ""
+    const minor = parsed.groups.MINOR || ""
+    const patch = parsed.groups.PATCH || ""
+    let prerelease = parsed.groups.PRERELEASE || ""
+    let build = parsed.groups.BUILD || ""
 
-    if (major) {
-        core.setOutput("major", major)
-        core.info("major: " + major)
-    }
-    if (minor) {
-        core.setOutput("minor", minor)
-        core.info("minor: " + minor)
-    }
-    if (patch) {
-        core.setOutput("patch", patch)
-        core.info("patch: " + patch)
-    }
-    if (prerelease) {
+    if (prerelease.length > 0) {
         prerelease = prerelease.substring(1)
-        core.setOutput("prerelease", prerelease)
-        core.info("prerelease: " + prerelease)
     }
-    if (parsed.groups.BUILD) {
+    if (build.length > 0) {
         build = build.substring(1)
-        core.setOutput("build", build)
-        core.info("build: " + build)
     }
 
+    let outputFn = (name, value) => {
+        core.setOutput(name, value)
+        core.info(name + ": " + value)
+    }
+
+    outputFn("major", major);
+    outputFn("minor", minor)
+    outputFn("patch", patch)
+    outputFn("prerelease", prerelease)
+    outputFn("build", build)
 
     const versionString  = major + "." + minor + "." + patch
-    core.setOutput("version", versionString)
-    core.info("version: " + versionString)
-
+    outputFn("version", versionString)
 }
 catch (err) {
     core.error(err);
