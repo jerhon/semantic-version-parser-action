@@ -1,0 +1,22 @@
+name: 'Semantic Version Parser'
+description: 'Parses a semantic version number.'
+inputs:
+  version:
+    description: 'The version number to parse.'
+    required: true
+outputs:
+  major:
+    description: 'The MAJOR part of the version number.'
+  minor:
+    description: 'The MINOR part of the version number.'
+  patch:
+    description: 'The PATCH part of the version number.'
+  prerelease:
+    description: 'The PRERELEASE part of the version number.'
+  build:
+    description: 'The BUILD part of the version number.'
+  version:
+    description: 'The version number in MAJOR.MINOR.PATCH format, without the PRERELEASE or BUILD.'
+runs:
+  using: 'node16'
+  main: 'src/index.js'
