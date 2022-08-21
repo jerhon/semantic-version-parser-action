@@ -17,7 +17,7 @@ steps:
             version: "v1.2.3-prerelease.aAzZ-09+build.aAzZ-09"
         - name: Test (success result)
           if: steps.fullVersion.major != "1" || steps.fullVersion.minor != "2" || steps.fullVersion.patch != "3" || steps.fullVersion.prerelease != "prerelease.aAzZ-09" || steps.fullVersion.build != "build.aAzZ-09" || steps.fullVersion.version == "1.2.3"
-          uses: actions/github-script@v3
+          uses: actions/.github-script@v3
           with:
             script: |
               core.setFailed('Parsed version did not match')
