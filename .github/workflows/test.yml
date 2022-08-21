@@ -9,13 +9,24 @@ jobs:
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Parse a version number
+      - name: Parse a version number (with pre-release and build)
         uses: ./ # Uses an action in the root directory
         id: fullVersion
         with:
           version: "v1.2.3-prerelease.aAzZ-09+build.aAzZ-09"
       - name: Test (success result)
         if: steps.fullVersion.outputs.major != '1' || steps.fullVersion.outputs.minor != '2' || steps.fullVersion.outputs.patch != '3' || steps.fullVersion.outputs.prerelease != 'prerelease.aAzZ-09' || steps.fullVersion.outputs.build != 'build.aAzZ-09' || steps.fullVersion.outputs.version != '1.2.3'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed('Parsed version did not match')
+      - name: Parse a version number
+        uses: ./
+        id: justVersion
+        with:
+          version: "v999.888.700"
+      - name: Test (success result)
+        if: steps.justVersion.outputs.major != '999' || steps.justVersion.outputs.minor != '888' || steps.justVersion.outputs.patch != '700'
         uses: actions/github-script@v6
         with:
           script: |
