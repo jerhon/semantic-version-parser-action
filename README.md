@@ -8,6 +8,10 @@ This action parses a semantic version string and returns parts of the version as
 
 The version string to parse.
 
+### `defaultVersion`
+
+The version string to parse when the version is invalid.
+
 ## Outputs
 
 ### `success`
