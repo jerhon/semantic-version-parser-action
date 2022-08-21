@@ -1,19 +1,25 @@
 const core = require("@actions/core");
-const github = require("@actions/github")
-
 
 try {
 
     // parse a action input as a semantic version number with a regex
     const version = core.getInput("version", {required: true})
+    const defaultVersion = core.getInput("defaultVersion", {required: false})
     const regex = /^v?(?<MAJOR>\d+)\.(?<MINOR>\d+)\.(?<PATCH>\d+)(?<PRERELEASE>-[A-Za-z0-9\-.]+)?(?<BUILD>\+[A-Za-z0-9\-.]+)?$/
-    if (!regex.test(version)) {
-        core.setOutput("success", false)
+
+    let parsed;
+    if (regex.test(version)) {
+        core.setOutput("success", true)
+        parsed = regex.exec(version)
+
+    } else if (regex.test(defaultVersion)) {
+        core.setOutput("success", true)
+        parsed = regex.exec(defaultVersion)
     }
-
-    core.setOutput("success", true)
-
-    const parsed = regex.exec(version)
+    else {
+        core.setOutput("success", false)
+        return;
+    }
 
     const major = parsed.groups.MAJOR || ""
     const minor = parsed.groups.MINOR || ""
