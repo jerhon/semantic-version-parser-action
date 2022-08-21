@@ -26,7 +26,7 @@ jobs:
         with:
           version: "v999.888.700"
       - name: Test (success result)
-        if: steps.justVersion.outputs.major != '999' || steps.justVersion.outputs.minor != '888' || steps.justVersion.outputs.patch != '700' || steps.justVersion.outputs.version != '999.888.700'
+        if: steps.justVersion.outputs.major != '999' || steps.justVersion.outputs.minor != '888' || steps.justVersion.outputs.patch != '700' || steps.justVersion.outputs.version != '999.888.700' || steps.justVersion.outputs.prerelease != '' || steps.justVersion.outputs.build != ''
         uses: actions/github-script@v6
         with:
           script: |
