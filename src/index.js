@@ -44,7 +44,10 @@ try {
         core.info("build: " + build)
     }
 
-    core.setOutput("version", major + "." + minor + "." + patch)
+
+    const versionString  = major + "." + minor + "." + patch
+    core.setOutput("version", versionString)
+    core.info("version: " + versionString)
 
 }
 catch (err) {
